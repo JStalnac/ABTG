@@ -18,7 +18,7 @@ public class PlayerLook : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
@@ -27,7 +27,6 @@ public class PlayerLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, minRotation, maxRotation);
 
         cameraBody.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        //transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
     }
 }
