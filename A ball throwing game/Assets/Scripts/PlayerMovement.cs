@@ -2,96 +2,44 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * From https://github.com/valgoun/CharacterController/blob/master/Assets/Scritps/RigidbodyCharacter.cs
+ */
+
 public class PlayerMovement : MonoBehaviour
 {
-    public CharacterController controller;
-    public float speed = 12f;
-    public float jumpHeight = 3f;
-    public float inAirSpeed = 2f;
-    public float inAirVelocityReduction = 0.4f;
-
-    public float gravity = -9.81f;
+    public float Speed = 5f;
+    public float JumpHeight = 2f;
+    public float GroundDistance = 0.2f;
+    public float DashDistance = 5f;
+    public LayerMask Ground;
     public Transform groundCheck;
-    public float groundDistance = 0.4f;
-    public LayerMask groundMask;
 
-    Vector3 velocity;
-    Vector3 jumpVelocity;
-    public bool Grounded { get; set; }
+    private Rigidbody rb;
+    private Vector3 inputs = Vector3.zero;
+    public bool OnGround = true;
 
-    // Start is called before the first frame update
     void Start()
     {
-
+        rb = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Ground check
-        Grounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        OnGround = Physics.CheckSphere(groundCheck.position, GroundDistance, Ground, QueryTriggerInteraction.Ignore);
 
-        if (Grounded && velocity.y < 0) 
-        {
-            velocity.y = -2f;
-        }
-
-        // Horizontal movement
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-
-        Vector3 movement = transform.right * x + transform.forward * z;
+        inputs = Vector3.zero;
+        inputs.x = Input.GetAxis("Horizontal");
+        inputs.z = Input.GetAxis("Vertical");
         
-        // In air movement
-        if (!Grounded) 
+        if (Input.GetButtonDown("Jump") && OnGround)
         {
-            movement = movement * speed / inAirSpeed + jumpVelocity;
-            if (x != 0 || z != 0) 
-            {
-                ReduceJumpVelocity();
-            }
+            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpHeight * -2f * Physics.gravity.y), ForceMode.VelocityChange);
         }
-        else
-        {
-            movement *= speed;
-        }
-
-        // The actual moving
-        controller.Move(movement * Time.deltaTime);
-
-        ReduceJumpVelocity();
-
-        // Jumping
-        if (Input.GetButtonDown("Jump") && Grounded)
-        {
-            jumpVelocity = new Vector3(controller.velocity.x, 0f, controller.velocity.z);
-            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
-        }
-
-        // Gravity
-        velocity.y += gravity * Time.deltaTime;
-        controller.Move(velocity * Time.deltaTime);
     }
 
-    public void ReduceJumpVelocity() 
+    void FixedUpdate()
     {
-        // Jumping velocity reduction
-        if (jumpVelocity.x > 0.5f)
-        {
-            jumpVelocity.x -= inAirVelocityReduction;
-        }
-        else if (jumpVelocity.x < -0.5f)
-        {
-            jumpVelocity.x += inAirVelocityReduction;
-        }
-
-        if (jumpVelocity.z > 0.5f)
-        {
-            jumpVelocity.z -= inAirVelocityReduction;
-        }
-        else if (jumpVelocity.z < -0.5f)
-        {
-            jumpVelocity.z += inAirVelocityReduction;
-        }
+        rb.MovePosition(rb.position + transform.forward * inputs.z * Speed * Time.fixedDeltaTime + transform.right * inputs.x * Speed * Time.fixedDeltaTime);
     }
 }
