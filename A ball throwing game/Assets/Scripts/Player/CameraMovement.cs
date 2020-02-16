@@ -10,14 +10,17 @@ using UnityEngine;
  * to actualCamera. This should fix jittering issues. Not 100% sure though lol
  */
 
-public class CameraMovement : MonoBehaviour
+namespace Scripts.Player
 {
-    public Transform actualCamera;
-
-    // Update is called once per frame
-    void Update()
+    public class CameraMovement : MonoBehaviour
     {
-        transform.position = actualCamera.position;
-        transform.rotation = actualCamera.rotation;
+        public Transform actualCamera;
+
+        // Update is called once per frame
+        void Update()
+        {
+            transform.position = actualCamera.position;
+            transform.rotation = actualCamera.rotation;
+        }
     }
 }
