@@ -169,12 +169,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &681280582 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4815760870997829946, guid: b4b82f65ae0ad714d9d692c24e12f441,
-    type: 3}
-  m_PrefabInstance: {fileID: 4815760871677930876}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &773928887
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,12 +552,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4710956467412010399, guid: b4b82f65ae0ad714d9d692c24e12f441,
-        type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 4dd963af4cc5c7c448f1c7a4cf341f2e,
-        type: 2}
     - target: {fileID: 4815760871164432544, guid: b4b82f65ae0ad714d9d692c24e12f441,
         type: 3}
       propertyPath: m_Enabled
@@ -642,7 +630,7 @@ PrefabInstance:
     - target: {fileID: 5704536047588173656, guid: b4b82f65ae0ad714d9d692c24e12f441,
         type: 3}
       propertyPath: speed
-      value: 600
+      value: 800
       objectReference: {fileID: 0}
     - target: {fileID: 5704536047588173656, guid: b4b82f65ae0ad714d9d692c24e12f441,
         type: 3}
@@ -651,8 +639,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5704536047588173656, guid: b4b82f65ae0ad714d9d692c24e12f441,
         type: 3}
-      propertyPath: groundCheck
-      value: 
-      objectReference: {fileID: 681280582}
-    m_RemovedComponents: []
+      propertyPath: maxSpeed
+      value: 1000
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4815760871164432551, guid: b4b82f65ae0ad714d9d692c24e12f441, type: 3}
+    - {fileID: 4815760871164432544, guid: b4b82f65ae0ad714d9d692c24e12f441, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b4b82f65ae0ad714d9d692c24e12f441, type: 3}
